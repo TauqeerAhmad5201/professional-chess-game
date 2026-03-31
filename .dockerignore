@@ -1,0 +1,13 @@
+node_modules
+dist
+.git
+.github
+*.md
+!README.md
+LICENSE
+.vscode
+.idea
+*.log
+.env*
+.DS_Store
+k8s

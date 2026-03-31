@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chess-game
+  namespace: chess-game
+  labels:
+    app.kubernetes.io/name: chess-game
+    app.kubernetes.io/component: webserver
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        # TODO: Replace with your actual domain
+        - chess.example.com
+      secretName: chess-game-tls
+  rules:
+    # TODO: Replace with your actual domain
+    - host: chess.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: chess-game
+                port:
+                  name: http
