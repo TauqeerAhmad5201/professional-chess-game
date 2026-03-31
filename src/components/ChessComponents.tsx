@@ -44,12 +44,13 @@ export function ChessSquare({
     <div
       onClick={piece ? onPieceClick : onClick}
       className={cn(
-        'aspect-square relative flex items-center justify-center transition-colors duration-200',
+        'aspect-square relative flex items-center justify-center transition-all duration-200',
         isLight ? 'bg-secondary' : 'bg-primary',
-        isSelected && 'ring-4 ring-accent ring-inset',
-        isHighlighted && !piece && 'after:content-[""] after:absolute after:w-1/3 after:h-1/3 after:bg-accent/60 after:rounded-full',
-        isHighlighted && piece && 'after:content-[""] after:absolute after:inset-0 after:border-4 after:border-accent/60 after:rounded-sm',
-        'cursor-pointer'
+        isSelected && 'ring-4 ring-accent ring-inset shadow-lg',
+        isHighlighted && !piece && 'after:content-[""] after:absolute after:w-2/5 after:h-2/5 after:bg-accent after:rounded-full after:shadow-md after:animate-pulse',
+        isHighlighted && piece && 'after:content-[""] after:absolute after:inset-1 after:border-[5px] after:border-accent after:rounded-md after:animate-pulse after:shadow-lg',
+        isHighlighted && 'bg-accent/10',
+        'cursor-pointer hover:brightness-110'
       )}
     >
       {piece && (
