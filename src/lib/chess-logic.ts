@@ -174,3 +174,27 @@ export function movePiece(board: Board, from: Position, to: Position): Board {
 
   return newBoard
 }
+
+export function checkGameOver(board: Board): { isOver: boolean; winner: PieceColor | null } {
+  let whiteKingExists = false
+  let blackKingExists = false
+
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+      const piece = board[row][col]
+      if (piece && piece.type === 'king') {
+        if (piece.color === 'white') whiteKingExists = true
+        if (piece.color === 'black') blackKingExists = true
+      }
+    }
+  }
+
+  if (!whiteKingExists) {
+    return { isOver: true, winner: 'black' }
+  }
+  if (!blackKingExists) {
+    return { isOver: true, winner: 'white' }
+  }
+
+  return { isOver: false, winner: null }
+}

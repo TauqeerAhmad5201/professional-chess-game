@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ArrowClockwise } from '@phosphor-icons/react'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { ArrowClockwise, Trophy } from '@phosphor-icons/react'
 import { ChessBoard, CapturedPieces } from '@/components/ChessComponents'
-import { createInitialBoard, getValidMoves, movePiece } from '@/lib/chess-logic'
+import { createInitialBoard, getValidMoves, movePiece, checkGameOver } from '@/lib/chess-logic'
 import type { Board, Piece, PieceColor, Position } from '@/lib/chess-types'
 
 function App() {
@@ -14,8 +15,18 @@ function App() {
   const [currentTurn, setCurrentTurn] = useState<PieceColor>('white')
   const [capturedWhite, setCapturedWhite] = useState<Piece[]>([])
   const [capturedBlack, setCapturedBlack] = useState<Piece[]>([])
+  const [gameOver, setGameOver] = useState<{ isOver: boolean; winner: PieceColor | null }>({ isOver: false, winner: null })
+
+  useEffect(() => {
+    const result = checkGameOver(board)
+    if (result.isOver) {
+      setGameOver(result)
+    }
+  }, [board])
 
   const handleSquareClick = (row: number, col: number) => {
+    if (gameOver.isOver) return
+
     const clickedPiece = board[row][col]
 
     if (selectedSquare) {
@@ -60,6 +71,7 @@ function App() {
     setCurrentTurn('white')
     setCapturedWhite([])
     setCapturedBlack([])
+    setGameOver({ isOver: false, winner: null })
   }
 
   return (
@@ -117,6 +129,30 @@ function App() {
           </Card>
         </div>
       </div>
+
+      <Dialog open={gameOver.isOver} onOpenChange={() => {}}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-3 text-2xl">
+              <Trophy size={32} className="text-accent" weight="fill" />
+              Game Over!
+            </DialogTitle>
+            <DialogDescription className="text-lg pt-2">
+              {gameOver.winner && (
+                <span className="font-semibold capitalize">
+                  {gameOver.winner} wins by capturing the opponent's king!
+                </span>
+              )}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mt-4">
+            <Button onClick={handleReset} className="w-full gap-2">
+              <ArrowClockwise size={20} />
+              Play Again
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
