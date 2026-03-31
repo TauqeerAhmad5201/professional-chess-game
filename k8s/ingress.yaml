@@ -13,9 +13,11 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
+        # TODO: Replace with your actual domain
         - chess.example.com
       secretName: chess-game-tls
   rules:
+    # TODO: Replace with your actual domain
     - host: chess.example.com
       http:
         paths:

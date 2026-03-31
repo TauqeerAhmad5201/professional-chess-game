@@ -19,7 +19,7 @@ This document covers how to build, containerize, and deploy the Chess Game appli
 
 | Tool       | Minimum Version | Purpose                    |
 | ---------- | --------------- | -------------------------- |
-| Node.js    | 20.x            | Build the application      |
+| Node.js    | 20.11+          | Build the application      |
 | npm        | 10.x            | Manage dependencies        |
 | Docker     | 24.x            | Build container images     |
 | kubectl    | 1.28+           | Interact with Kubernetes   |
