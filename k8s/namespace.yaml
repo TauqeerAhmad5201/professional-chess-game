@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: chess-game
+  labels:
+    app.kubernetes.io/name: chess-game
+    app.kubernetes.io/part-of: chess-game
