@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chess-game
+  namespace: chess-game
+  labels:
+    app: chess-game
+spec:
+  type: ClusterIP
+  selector:
+    app: chess-game
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
